@@ -2,7 +2,25 @@ const {expect} = require('chai');
 const request = require('supertest');
 const server = require('../../server');
 
-describe('Create User rout', () => {
+const Database = require('../utils/Database');
+const mockData = require('../utils/user');
+
+describe('Delete user route', () => {
+    context('when I execute a delete to /user/:id with nonexistent id', ()=>{
+        before(async () => {
+            await Database.clear();
+            await mockData.createSeveralUsers();
+          });  
+        it('should return status 404', async () => {
+        const response = await request(server).delete(`/users/${mockData.invalidId()}`);
+        expect(response.status).to.be.equals(404);
+        });
+    });
+
+});
+
+
+describe('Create User route', () => {
     context('when I execute a post to /user with valid body', () => {
         const data = {
             name: 'Letícia',
