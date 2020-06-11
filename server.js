@@ -8,11 +8,10 @@ const server = express();
 Database.init();
 
 server.use(bodyParser.json());
-
 server.use(routes);
 
 server.use((err, req, res, next) => {
-    res.status(err.status)
+    res.send({message: err.message})
 });
 
 module.exports = server;

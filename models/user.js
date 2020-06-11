@@ -6,8 +6,8 @@ class  User extends Collection {
         super('users');
     }
 
-    find(limit, skip, sort){
-        return this.collection.find({}).limit(limit).skip(skip).sort(sort).toArray();
+    find(){
+        return this.collection.find({}).toArray();
     }
 
     findOne(id){
@@ -19,7 +19,7 @@ class  User extends Collection {
     }
     
     updateOne(id, body){
-        return this.collection.updateOne({_id: id}, [{ $set: body}] );
+        return this.collection.updateOne({_id: ObjectId(id)}, [{ $set: body}] );
     }
 
     deleteOne(id){
