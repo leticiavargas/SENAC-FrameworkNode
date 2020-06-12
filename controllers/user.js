@@ -29,7 +29,7 @@ class UserController {
     async update(req, res){
         const {id} = req.params;
         const result = await User.updateOne(id, req.body);
-        if(!result){
+        if(!result.nModified){
             return res.status(404).send();
         }
         res.send(result);

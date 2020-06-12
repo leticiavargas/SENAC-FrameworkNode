@@ -6,6 +6,7 @@ const DatabaseTest = require('../utils/Database');
 const Database = require('../../lib/database');
 const mockData = require('../utils/user');
 
+
 describe('Delete user route', () => {
     context('when I execute a delete to /user/:id with nonexistent id', ()=>{
         before(async () => {
@@ -60,4 +61,20 @@ describe('Create User route', () => {
         });
     });
 
+});
+
+
+describe('Update User Route', () => {
+    context('when i execute a PUT to /user/:id with a nonexistent id', () => {
+        before(async () => {
+            await Database.init();
+            await DatabaseTest.clear();
+            const userData = await mockData.createSeveralUsers();
+          });
+        it('should return status 404', async () => {
+            const data = mockData.updatedData();
+            const response = await request(server).put(`/user/${mockData.invalidId()}`).send(data).set('Accept', 'application/json');
+            expect(response.status).to.be.equals(404);
+        });
+    });
 });
